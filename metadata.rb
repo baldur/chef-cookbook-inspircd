@@ -2,10 +2,9 @@ maintainer        "AT&T Services, Inc"
 license           ""
 description       "Install InspIRCd"
 long_description  IO.read(File.join(File.dirname(__FILE__), 'README.md'))
-version           "0.5.1"
+version           "0.5.2"
 
-recipe "inspircd", "Install InspIRCd"
-recipe "inspircd::source", "Install inspircd"
+recipe "inspircd", "Install InspIRCd from source"
 
 depends "build-essential"
 

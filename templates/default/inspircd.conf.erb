@@ -4,9 +4,9 @@
     network="<%= @server_network %>">
 
 <admin
-    name="<%= @server_admin_name %>"
-    nick="<%= @server_admin_nick %>"
-    email="<%= @server_admin_email %>">
+    name="<%= @server_admin[:id] %>"
+    nick="<%= @server_admin[:nick] %>"
+    email="<%= @server_admin[:email] %>">
 
 <% @server_listen.each do |p| %>
 <bind
@@ -46,40 +46,6 @@
     ipv4clone="32"
     ipv6clone="128"
 >
-
-<class
-     name="Shutdown"
-     commands="DIE RESTART REHASH LOADMODULE UNLOADMODULE RELOAD GUNLOADMODULE GRELOADMODULE SAJOIN SAPART SANICK SAQUIT SATOPIC"
-     privs="users/auspex channels/auspex servers/auspex users/mass-message channels/high-join-limit channels/set-permanent users/flood/no-throttle users/flood/increased-buffers"
-     usermodes="*"
-     chanmodes="*"
->
-
-<class name="ServerLink" commands="CONNECT SQUIT CONNECT MKPASSWD ALLTIME SWHOIS CLOSE JUMPSERVER LOCKSERV" usermodes="*" chanmodes="*" privs="servers/auspex">
-<class name="BanControl" commands="KILL GLINE KLINE ZLINE QLINE ELINE TLINE RLINE CHECK NICKLOCK SHUN CLONES CBAN" usermodes="*" chanmodes="*">
-<class name="OperChat" commands="WALLOPS GLOBOPS SETIDLE" usermodes="*" chanmodes="*" privs="users/mass-message">
-<class name="HostCloak" commands="SETHOST SETIDENT SETNAME CHGHOST CHGIDENT TAXONOMY" usermodes="*" chanmodes="*" privs="users/auspex">
-
-<type
-    name="NetAdmin"
-    classes="OperChat BanControl HostCloak Shutdown ServerLink"
-    vhost="netadmin.<%= @fqdn %>"
-    modes="+s +cCqQ">
-
-<type name="GlobalOp" classes="OperChat BanControl HostCloak ServerLink" vhost="ircop.<%= @fqdn %>">
-
-#<oper
-#      name="Brain"
-#      password="s3cret"
-#      host="ident@dialup15.isp.com *@localhost *@server.com *@3ffe::0/16"
-#      type="NetAdmin">
-
-<oper
-      name="netadmin"
-      hash="sha256"
-      password="1ec1c26b50d5d3c58d9583181af8076655fe00756bf7285940ba3670f99fcba0"
-      host="ident@dialup15.isp.com *@localhost *@server.com *@3ffe::0/16"
-      type="NetAdmin">
 
 <link name="services.tfoundry.com"
       ipaddr="localhost"
@@ -446,4 +412,5 @@
         # will be banning 955 or more users.
         trigger="95.5">
 
+<include file="<%= @conf_dir %>/opers.conf">
 <include file="<%= @conf_dir %>/modules.conf">

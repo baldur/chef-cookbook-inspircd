@@ -119,10 +119,35 @@ template "inspircd.conf" do
     :fqdn               => node[:inspircd][:fqdn],
     :description        => node[:inspircd][:server_description],
     :network            => node[:inspircd][:server_network],
+    :server_listen      => node[:inspircd][:listen],
+    :server_admin       => search(:ircd_admin, "*:*").first,
+  )
+  notifies :reload, 'service[inspircd]', :immediately
+end
+
+template "opers.conf" do
+  path "#{node[:inspircd]['conf_dir']}/opers.conf"
+  source   "opers.conf.erb"
+  mode     0644
+  owner    "root"
+  group    "root"
+  variables(
+    :working_dir        => node[:inspircd][:prefix],
+    :binary             => node[:inspircd][:binary],
+    :conf_dir           => node[:inspircd][:conf_dir],
+    :log_dir            => node[:inspircd][:log_dir],
+    :lib_dir            => node[:inspircd][:lib_dir],
+    :pid                => node[:inspircd][:pid],
+    :ircd_user          => node[:inspircd][:user],
+    :config_file        => node[:inspircd][:conf_path],
+    :fqdn               => node[:inspircd][:fqdn],
+    :description        => node[:inspircd][:server_description],
+    :network            => node[:inspircd][:server_network],
     :server_admin_name  => node[:inspircd][:server_admin_name],
     :server_admin_nick  => node[:inspircd][:server_admin_nick],
     :server_admin_email => node[:inspircd][:server_admin_email],
-    :server_listen      => node[:inspircd][:listen]
+    :server_listen      => node[:inspircd][:listen],
+    :opers              => search(:ircd_opers, "*:*"),
   )
   notifies :reload, 'service[inspircd]', :immediately
 end

@@ -78,37 +78,15 @@
 #   Remember to only make operators out of trust worthy people.       #
 #                                                                     #
 
-# oline with plain-text password and no comments..for all who like copy & paste
+<% @opers.each do |oper| %>
 <oper
-      name="Brain"
-      password="s3cret"
-      host="ident@dialup15.isp.com *@localhost *@server.com *@3ffe::0/16"
-      type="NetAdmin">
-
-# oline with hashed password. It is highly recommended to use hashed passwords.
-<oper
-      # name: oper login that is used to oper up (/oper name password).
-      # Remember: This is case sensitive
-      name="Brain"
-
-      # hash: what hash this password is hashed with. requires the module
-      # for selected hash (m_md5.so, m_sha256.so or m_ripemd160.so) be
-      # loaded and the password hashing module (m_password_hash.so)
-      # loaded. Options here are: "md5", "sha256" and "ripemd160".
-      # Create hashed password with: /mkpasswd <hash> <password>
+      name="<%= oper[:id] %>"
       hash="sha256"
-
       # password: a hash of your password (see above option) hashed
       # with /mkpasswd <hash> <password> . See m_password_hash in modules.conf
       # for more information about password hashing.
-      password="1ec1c26b50d5d3c58d9583181af8076655fe00756bf7285940ba3670f99fcba0"
+      password="<%= oper[:hash] %>"
 
-      # host: What hostnames/IP's are allowed to oper up with this oline.
-      # Multiple options can be separated by spaces and CIDR's are allowed.
-      # You CAN use just * or *@* for this section, but it is not recommended
-      # for security reasons.
-      host="ident@dialup15.isp.com *@localhost *@server.com *@3ffe::0/16"
-
-      # type: What oper type this oline is. See the block above for list
-      # of types. NOTE: This is case-sensitive as well.
-      type="NetAdmin">
+      host="<%= oper[:host] %>"
+      type="<%= oper[:type] %>">
+<% end %>
