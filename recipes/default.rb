@@ -121,6 +121,7 @@ template "inspircd.conf" do
     :network            => node[:inspircd][:server_network],
     :server_listen      => node[:inspircd][:listen],
     :server_admin       => search(:ircd_admin, "*:*").first,
+    :localmax           => node[:inspircd][:localmax]
   )
   notifies :reload, 'service[inspircd]', :immediately
 end

@@ -13,6 +13,7 @@ default['inspircd']['pid']         = "/var/run/inspircd.pid"
 
 default['inspircd']['listen']      = ['127.0.0.1']
 default['inspircd']['fqdn']        = 'irc.tfoundry.com'
+default['inspircd']['localmax']    = 3
 
 case node['platform']
 when "debian","ubuntu"
